@@ -63,6 +63,12 @@
             @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.ConfirmPassword) } })
             @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
         </fieldset>
+        <fieldset>
+            <div class="legend">Notifications</div>
+            @Html.CheckBoxFor(model => model.NotificationsDisabled, new { @checked = Model.NotificationsDisabled })
+            <label for="NotificationsDisabled">Ne plus recevoir de notification</label>
+        </fieldset>
+
         <input type="submit" value="@formSubmitCaption" class="btn btn-default" />
         <hr />
         <a href="@((string)Session["LastAction"])">Retour</a>

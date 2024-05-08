@@ -24,6 +24,7 @@ namespace ChatManager.Models
         public int UserTypeId { get; set; } = 3;
         public bool Verified { get; set; } = false;
         public bool Blocked { get; set; } = false;
+        public bool NotificationsDisabled { get; set; } = false;
 
         [Display(Name = "Prenom"), Required(ErrorMessage = "Obligatoire")]
         public string FirstName { get; set; }

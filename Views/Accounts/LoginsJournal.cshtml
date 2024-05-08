@@ -11,9 +11,11 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
-    <script defer>
-        initTimeout(170);
-        let pr = new PartialRefresh("@Url.Action("GetLoginsList")", "LoginsListContainer", 5);
+    <script>
+        $(function () {
+            initTimeout(170);
+            let pr = new PartialRefresh("@Url.Action("GetLoginsList")", "LoginsListContainer", 5);
+        })
     </script>
 }
 

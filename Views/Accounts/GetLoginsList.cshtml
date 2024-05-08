@@ -29,26 +29,30 @@
 
             @if (shiftedLoginDate != shiftedLogoutDate)
             {
-                <div>&nbsp;:&nbsp;@shiftedLogoutDate.ToShortTimeString()</div>
+                <div>&nbsp;-&nbsp;@shiftedLogoutDate.ToShortTimeString()</div>
             }
             else
             {
                 if (loggedUsersId.Contains(login.User.Id))
                 {
                     loggedUsersId.Remove(login.User.Id);
-                    <div title="Est en ligne en ce moment">&nbsp;:&nbsp; @Helper.OnLineStatusIcon(true, false)</div>
+                    <div title="Est en ligne en ce moment">&nbsp;-&nbsp; @Helper.OnLineStatusIcon(true, false)</div>
                 }
                 else
                 {
-                    <div>&nbsp;:&nbsp; @Helper.TimeOutIcon()</div>
+                    <div>&nbsp;-&nbsp; @Helper.TimeOutIcon()</div>
                 }
             }
 
-            @if (false && login.IpAddress != "::1" && login.CountryCode != null)
+            @if (true && login.IpAddress != "::1" && login.CountryCode != null)
             {
 
                 <div>
-                    <span>@login.City, @login.RegionName </span> @Helper.CountryFlag(login.CountryCode.ToLower())
+                    @Helper.CountryFlag(login.CountryCode.ToLower())
+                </div>
+                <div class="IPadress">
+                    @login.IpAddress <br />
+                    @login.City,  @login.RegionName
                 </div>
             }
             else

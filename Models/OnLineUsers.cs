@@ -124,7 +124,7 @@ namespace ChatManager.Models
         public static void AddNotification(int TargetUserId, string Message)
         {
             User user = DB.Users.Get(TargetUserId);
-            if (user != null && IsOnLine(user.Id))
+            if (user != null && IsOnLine(user.Id) && !user.NotificationsDisabled)
             {
                 Notifications.Add(new Notification() { TargetUserId = TargetUserId, Message = Message });
             }
@@ -140,9 +140,14 @@ namespace ChatManager.Models
             {
                 List<string> notificationMessages = new List<string>();
                 List<Notification> notifications = Notifications.Where(n => n.TargetUserId == currentUser.Id).OrderBy(n => n.Created).ToList();
-                foreach (Notification notification in notifications)
+                if (!currentUser.NotificationsDisabled)
+                    foreach (Notification notification in notifications)
+                    {
+                        LastNotifications.Add(notification.Message);
+                    }
+                else
                 {
-                    LastNotifications.Add(notification.Message);
+                    LastNotifications.Clear();
                 }
             }
         }

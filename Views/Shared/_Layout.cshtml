@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 @{
     var currentUser = ChatManager.Models.OnlineUsers.GetSessionUser();
+    bool NotificationsDisabled = currentUser != null ? currentUser.NotificationsDisabled : false;
 }
 <html>
 <head>
@@ -54,44 +55,51 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-<script>
+    <script>
         $(function () {
-            setInterval(() => {
-                $.ajax({
-                    url: "/Accounts/UserHasNotifications",
-                    dataType: "text",
-                    success: (hasNotifications) => {
-                        console.log("Has notification : ", JSON.parse(hasNotifications))
-                        if (JSON.parse(hasNotifications))
-                            $("#NotificationsIcon").addClass("blink");
-                        else
-                            $("#NotificationsIcon").removeClass("blink");
-                    }
-                })
-            }, 2 * 1000)
-            $("#NotificationsIcon").click(function () {
-                $.ajax({
-                    url: "/Accounts/GetUserNotifications",
-                    dataType: "text",
-                    success: (notifications) => {
-                        notifications = JSON.parse(notifications);
-                        console.log("Messages: ", notifications);
-                        if (notifications.length > 0) {
-                            let messages = "";
-                            notifications.forEach(message => {
-                                messages += message + "<br>";
-                            })
-                            bootbox.alert(messages);
+            let NotificationsDisabled = @NotificationsDisabled.ToString().ToLower();
+            if (!NotificationsDisabled) {
+                setInterval(() => {
+                    $.ajax({
+                        url: "/Accounts/UserHasNotifications",
+                        dataType: "text",
+                        success: (hasNotifications) => {
+                            console.log("Has notification : ", JSON.parse(hasNotifications))
+                            if (JSON.parse(hasNotifications))
+                                $("#NotificationsIcon").addClass("blink");
+                            else
+                                $("#NotificationsIcon").removeClass("blink");
                         }
-                        else
-                            bootbox.alert("Aucune notification");
-                        $("#NotificationsIcon").removeClass("blink");
-                    }
-                })
+                    })
+                }, 5 * 1000)
+            }
+            $("#NotificationsIcon").click(function () {
+                if (!NotificationsDisabled) {
+                    $.ajax({
+                        url: "/Accounts/GetUserNotifications",
+                        dataType: "text",
+                        success: (notifications) => {
+                            notifications = JSON.parse(notifications);
+                            console.log("Messages: ", notifications);
+                            if (notifications.length > 0) {
+                                let messages = "";
+                                notifications.forEach(message => {
+                                    messages += message + "<br>";
+                                })
+                                bootbox.alert(messages);
+                            }
+                            else
+                                bootbox.alert("Aucune notification");
+                            $("#NotificationsIcon").removeClass("blink");
+                        }
+                    })
+                } else {
+                    bootbox.alert("Notifications désactivées");
+                }
             })
         })
 
-</script>
+    </script>
 
 </body>
 </html>

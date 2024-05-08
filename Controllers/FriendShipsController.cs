@@ -108,20 +108,26 @@ namespace ChatManager.Controllers
             ViewBag.FilterFriend = FilterFriend;
             ViewBag.FilterRefused = FilterRefused;
             ViewBag.FilterBlocked = FilterBlocked;
+            Session["LastAction"] = "/Friendships/index";
             return View();
         }
 
         public ActionResult Search(string text)
         {
+            SearchText = text;
+            return null;
+        }
+
+        public Regex ToRegex(string text)
+        {
             if (text == "")
                 text = "*";
-            else 
-                if (text.Length>0 && text.IndexOf("*", StringComparison.OrdinalIgnoreCase) == -1)
+            else
+                if (text.Length > 0 && text.IndexOf("*", StringComparison.OrdinalIgnoreCase) == -1)
             {
-                text = "*" + text  + "*";
+                text = "*" + text + "*";
             }
-            SearchText = "^" + Regex.Escape(text.Trim().ToLower()).Replace(@"\*", ".*").Replace(@"\?", ".")+ "$";
-            return null;
+            return new Regex("^" + Regex.Escape(text.Trim().ToLower()).Replace(@"\*", ".*").Replace(@"\?", ".") + "$", RegexOptions.IgnoreCase);
         }
 
         public ActionResult SetFilterNotFriend(bool check)
@@ -158,7 +164,7 @@ namespace ChatManager.Controllers
         {
             var loggedUser = OnlineUsers.GetSessionUser();
             List<User> filteredUsers = new List<User>();
-            Regex regex = new Regex(SearchText, RegexOptions.IgnoreCase);
+            Regex regex = ToRegex(SearchText);
             List<User> users = SearchText != "" ?
                 DB.Users.SortedUsers().Where(u => u.Verified && regex.IsMatch((u.FirstName + " " + u.LastName).ToLower())).ToList() :
                 DB.Users.SortedUsers().ToList().Where(u => u.Verified).ToList();
@@ -197,7 +203,7 @@ namespace ChatManager.Controllers
 
         public ActionResult GetFriendshipsStatus(bool forceRefresh = false)
         {
-            if (forceRefresh || DB.Friendships.HasChanged || OnlineUsers.HasChanged())
+            if (forceRefresh || DB.Friendships.HasChanged || OnlineUsers.HasChanged() || DB.Users.HasChanged)
                 return PartialView(FilterUsers());
 
             return null;
