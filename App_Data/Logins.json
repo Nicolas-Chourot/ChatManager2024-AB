@@ -1,1 +1,42 @@
-[{"Id":1,"UserId":2,"LoginDate":"2024-05-08T06:47:04.5196275-04:00","LogoutDate":"2024-05-08T06:50:32.2786094-04:00","IpAddress":"::1","City":"","RegionName":"","CountryCode":""},{"Id":2,"UserId":3,"LoginDate":"2024-05-08T06:48:36.2616902-04:00","LogoutDate":"2024-05-08T06:50:06.1979832-04:00","IpAddress":"::1","City":"","RegionName":"","CountryCode":""},{"Id":3,"UserId":2,"LoginDate":"2024-05-08T06:50:35.2967857-04:00","LogoutDate":"2024-05-08T06:52:28.8840714-04:00","IpAddress":"::1","City":"","RegionName":"","CountryCode":""},{"Id":4,"UserId":3,"LoginDate":"2024-05-08T06:50:46.9918625-04:00","LogoutDate":"2024-05-08T06:52:30.7819878-04:00","IpAddress":"::1","City":"","RegionName":"","CountryCode":""}]
+[
+  {
+    "Id": 1,
+    "UserId": 2,
+    "LoginDate": "2024-05-08T06:47:04.5196275-04:00",
+    "LogoutDate": "2024-05-08T06:50:32.2786094-04:00",
+    "IpAddress": "::1",
+    "City": "",
+    "RegionName": "",
+    "CountryCode": ""
+  },
+  {
+    "Id": 2,
+    "UserId": 3,
+    "LoginDate": "2024-05-08T06:48:36.2616902-04:00",
+    "LogoutDate": "2024-05-08T06:50:06.1979832-04:00",
+    "IpAddress": "::1",
+    "City": "",
+    "RegionName": "",
+    "CountryCode": ""
+  },
+  {
+    "Id": 3,
+    "UserId": 2,
+    "LoginDate": "2024-05-08T06:50:35.2967857-04:00",
+    "LogoutDate": "2024-05-08T06:52:28.8840714-04:00",
+    "IpAddress": "::1",
+    "City": "",
+    "RegionName": "",
+    "CountryCode": ""
+  },
+  {
+    "Id": 4,
+    "UserId": 3,
+    "LoginDate": "2024-05-08T06:50:46.9918625-04:00",
+    "LogoutDate": "2024-05-08T06:52:30.7819878-04:00",
+    "IpAddress": "::1",
+    "City": "",
+    "RegionName": "",
+    "CountryCode": ""
+  }
+]
